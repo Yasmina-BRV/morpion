@@ -1,5 +1,5 @@
 import { Button, Label, Modal, TextInput } from "flowbite-react";
-import { useNavigate } from "react-router";
+import { useState } from "react";
 
 type PLayersClassicModalProps = {
     show: boolean;
@@ -7,28 +7,42 @@ type PLayersClassicModalProps = {
 }
 
 const PlayersClassicModal = (props: PLayersClassicModalProps) => {
-    const navigate = useNavigate();
+    const [formData, setFormData] = useState({
+        pseudoCP1: "Joueur 1",
+        pseudoCP2: "Joueur 2"
+    });
 
-    const navigateToGame = () => {
-        navigate("/game")
-    }
+    const handleSubmit = (e: { preventDefault: () => void; }) => {
+        e.preventDefault()
+        console.log(formData);
+    };
+    
     return(
         <Modal show={props.show} onClose={props.onClose} popup>
             <Modal.Header />
             <Modal.Body>
                 <div className="space-y-6">
                     <h3 className="text-xl font-medium text-gray-900 dark:text-white">Morpion Classique - Jeu contre un autre joueur</h3>
-                    <div className="mb-2 block">
-                        <Label htmlFor="pseudo" value="Pseudo Joueur 1" />
-                        <TextInput id="pseudoP1C" defaultValue={"Joueur 1"} required />
-                    </div>
-                    <div className="mb-2 block">
-                        <Label htmlFor="pseudo" value="Pseudo Joueur 2" />
-                        <TextInput id="pseudoP2C" defaultValue={"Joueur 2"} required />
-                    </div>
-                    <div className="w-full">
-                        <Button onClick={navigateToGame} className="bg-medium-grey shadow-lg shadow-medium-grey-500/50 hover:bg-pale-grey">Jouer</Button>
-                    </div>
+                    <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+                        <div>
+                            <div className="mb-2 block">
+                                <Label htmlFor="pseudoCP1" value="Ton pseudo" />
+                            </div>
+                            <TextInput onChange={(e) => setFormData({...formData, pseudoCP1: e.target.value})} id="pseudoCP1" type="pseudo" name="pseudoCP1" value={formData.pseudoCP1} required />
+                        </div>
+
+                        <div>
+                            <div className="mb-2 block">
+                                <Label htmlFor="pseudoCP2" value="Ton pseudo" />
+                            </div>
+                            <TextInput onChange={(e) => setFormData({...formData, pseudoCP2: e.target.value})} id="pseudoCP2" type="pseudo" name="pseudoCP2" value={formData.pseudoCP2} required />
+                        </div>
+                        
+                        <p>
+                            Les pseudonymes étant facultatifs, des valeurs par défaut sont proposées.
+                        </p>
+                        <Button type="submit" className="bg-pale-grey shadow-lg shadow-pale-grey-500/50 hover:bg-medium-grey">Jouer</Button>
+                    </form>
                 </div>
             </Modal.Body>
         </Modal>
