@@ -1,5 +1,6 @@
 import { Button, Label, Modal, TextInput } from "flowbite-react";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 
 type PLayersClassicModalProps = {
     show: boolean;
@@ -15,6 +16,11 @@ const PlayersClassicModal = (props: PLayersClassicModalProps) => {
     const handleSubmit = (e: { preventDefault: () => void; }) => {
         e.preventDefault()
         console.log(formData);
+    };
+
+    const navigate = useNavigate();
+    const navigateToGame = () => {
+        navigate("/game");
     };
     
     return(
@@ -41,7 +47,7 @@ const PlayersClassicModal = (props: PLayersClassicModalProps) => {
                         <p>
                             Les pseudonymes étant facultatifs, des valeurs par défaut sont proposées.
                         </p>
-                        <Button type="submit" className="bg-pale-grey shadow-lg shadow-pale-grey-500/50 hover:bg-medium-grey">Jouer</Button>
+                        <Button onClick={navigateToGame} type="submit" className="bg-pale-grey shadow-lg shadow-pale-grey-500/50 hover:bg-medium-grey">Jouer</Button>
                     </form>
                 </div>
             </Modal.Body>

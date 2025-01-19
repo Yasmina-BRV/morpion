@@ -1,5 +1,6 @@
 import { Button, Label, Modal, TextInput } from "flowbite-react";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 
 type CPUAltModalProps = {
     show: boolean;
@@ -7,14 +8,19 @@ type CPUAltModalProps = {
 }
 
 const CPUAltModal = (props: CPUAltModalProps) => {
-        const [formData, setFormData] = useState({
-                    pseudoA: ""
-                });
+    const [formData, setFormData] = useState({
+        pseudoA: ""
+    });
             
-                const handleSubmit = (e: { preventDefault: () => void; }) => {
-                    e.preventDefault()
-                    console.log(formData);
-                };
+    const handleSubmit = (e: { preventDefault: () => void; }) => {
+        e.preventDefault()
+        console.log(formData);
+    };
+
+    const navigate = useNavigate();
+    const navigateToGame = () => {
+        navigate("/game");
+    };
 
     return (
         <Modal show={props.show} onClose={props.onClose} popup>
@@ -32,7 +38,7 @@ const CPUAltModal = (props: CPUAltModalProps) => {
                         <p>
                             Le pseudonyme est obligatoire, il sera utilisé pour le classement.
                         </p>
-                        <Button type="submit" className="bg-pale-grey shadow-lg shadow-pale-grey-500/50 hover:bg-medium-grey">Jouer</Button>
+                        <Button onClick={navigateToGame} type="submit" className="bg-pale-grey shadow-lg shadow-pale-grey-500/50 hover:bg-medium-grey">Jouer</Button>
                     </form>
                 </div>
             </Modal.Body>
